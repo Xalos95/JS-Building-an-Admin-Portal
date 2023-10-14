@@ -10,7 +10,8 @@ async function main()
 
 function renderBookForm(book)
 {
-    let bookForm = document.querySelector('.container')
+    //was missing root 
+    let root = document.querySelector('#root')
 
     //created a list item for the books
     let bookLi = document.createElement('li')
@@ -37,10 +38,10 @@ function renderBookForm(book)
                 quantity: bookQuant.value
             })
         })
-        console.log(response)
     })
-    bookLi.append(saveBttn)
-    bookForm.append(bookLi)
+    //was missing book quantity 
+    bookLi.append(bookQuant, saveBttn)
+    root.append(bookLi)
 }
 
 main()
