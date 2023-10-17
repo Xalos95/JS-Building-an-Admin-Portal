@@ -5,12 +5,12 @@ async function main()
     let response = await fetch('http://localhost:3001/listBooks')
     let books = await response.json()
 
-    books.forEach(renderBookForm)
+    books.forEach(renderBookChange)
 }
 
-function renderBookForm(book)
+function renderBookChange(book)
 {
-    //was missing root 
+    //was missing root which gets the first element of the document until there's no more
     let root = document.querySelector('#root')
 
     //created a list item for the books
@@ -21,16 +21,13 @@ function renderBookForm(book)
     let bookQuant = document.createElement('input')
     bookQuant.value = book.quantity
 
-    //appending the book to the list items
-    bookLi.append(bookQuant)
-
     //creating  a save button for the inputs
     let saveBttn = document.createElement('button')
     saveBttn.textContent = 'Save'
 
-    //event listener to the save button
+    //event listener to the save button and where to update in API
     saveBttn.addEventListener('click',() => {
-        let response = fetch('http://localhost:3001/updateBook', {
+        fetch('http://localhost:3001/updateBook', {
             method: 'PATCH',
             headers: {'Content-Type': 'application:json'},
             body: JSON.stringify({
@@ -39,7 +36,7 @@ function renderBookForm(book)
             })
         })
     })
-    //was missing book quantity 
+     //appending the book to the list items and was missing book quantity
     bookLi.append(bookQuant, saveBttn)
     root.append(bookLi)
 }
